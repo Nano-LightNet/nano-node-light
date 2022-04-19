@@ -135,3 +135,56 @@ export function decodeVote({ body, extensions }) {
     isValid
   }
 }
+
+export function decodeTelemetry({ body, extensions }) {
+  const signature = body.subarray(0, 64)
+  const node_id = body.subarray(64, 96)
+  const block_count = body.readBigUInt64BE(96)
+  const cemented_count = body.readBigUInt64BE(104)
+  const unchecked_count = body.readBigUInt64BE(112)
+  const account_count = body.readBigUInt64BE(120)
+  const bandwidth_cap = body.readBigUInt64BE(128)
+  const peer_count = body.readUInt32BE(136)
+  const protocol_version = body[140]
+  const uptime = body.readBigUInt64BE(141)
+  const genesis_block = body.subarray(149, 181)
+  const major_version = body[181]
+  const minor_version = body[182]
+  const patch_version = body[183]
+  const pre_release_version = body[184]
+  const maker = body[185]
+  const timestamp = body.readBigUInt64BE(186)
+  const active_difficulty = body.readBigUInt64BE(194)
+  const unknown_data = body.length > 202 ? body.readBigUInt64BE(202) : null
+
+  const versionList = [major_version, minor_version, patch_version]
+  const full_version = versionList.join('.')
+
+  const isValid = ed25519.verify(signature, body.subarray(64), node_id)
+
+  return {
+    isValid,
+    full_version,
+
+    block_count,
+    cemented_count,
+    unchecked_count,
+    account_count,
+    bandwidth_cap,
+    peer_count,
+    protocol_version,
+    uptime,
+    genesis_block,
+    major_version,
+    minor_version,
+    patch_version,
+    pre_release_version,
+    maker,
+    timestamp,
+    active_difficulty,
+    node_id,
+    signature,
+
+    unknown_data
+  }
+}

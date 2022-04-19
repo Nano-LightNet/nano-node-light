@@ -37,11 +37,16 @@ const network = getNetwork(argv.network)
 const node = new NanoNode({
   address: argv.address,
   port: argv.port,
-  network
+  network,
+  requestTelemetry: true
 })
 
 node.on('error', (error) => {
   console.log(error)
+})
+
+node.on('telemetry', (telemetry) => {
+  log(telemetry)
 })
 
 node.connect({

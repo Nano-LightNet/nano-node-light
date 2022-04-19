@@ -37,16 +37,19 @@ export const NETWORK = {
   LIVE: {
     ID: 'C'.charCodeAt(0),
     ADDRESS: 'peering.nano.org',
-    PORT: 7075
+    PORT: 7075,
+    TELEMETRY_CACHE_CUTOFF: 6e10 // 60 seconds
   },
   BETA: {
     ID: 'B'.charCodeAt(0),
     ADDRESS: 'peering-beta.nano.org',
-    PORT: 54000
+    PORT: 54000,
+    TELEMETRY_CACHE_CUTOFF: 15e9 // 15 seconds
   },
   TEST: {
     ID: 'X'.charCodeAt(0),
     ADDRESS: 'peering-test.nano.org',
-    PORT: 17075
+    PORT: 17075,
+    TELEMETRY_CACHE_CUTOFF: 6e10 // 60 seconds
   }
 }
