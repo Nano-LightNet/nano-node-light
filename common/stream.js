@@ -50,6 +50,14 @@ function getSize(header) {
 
       return 104 + blockCount * 32
     }
+    case constants.MESSAGE_TYPE.BULK_PULL: {
+      const extendedLength = header.extensions & 0x1 && 8
+
+      return 64 + extendedLength
+    }
+    case constants.MESSAGE_TYPE.FRONTIER_REQ: {
+      return 40
+    }
     case constants.MESSAGE_TYPE.NODE_ID_HANDSHAKE: {
       const queryLength = header.extensions & 0x1 && 32
       const responseLength = header.extensions & 0x2 && 96
