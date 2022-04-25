@@ -2,6 +2,7 @@
   "name": "nano-node-light",
   "version": "0.0.1",
   "type": "module",
+  "main": "lib/nano-node.js",
   "imports": {
     "#common": "./common/index.js",
     "#common/*": "./common/*",
