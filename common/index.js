@@ -81,6 +81,7 @@ export function encodeIPv6(raw) {
 export function decodeNodeHandshake({ packet, extensions }) {
   const hasQuery = !!(extensions & 1)
   const hasResponse = !!(extensions & 2)
+  const isLight = !!(extensions & 0x8000);
 
   let query
   let response
@@ -100,7 +101,8 @@ export function decodeNodeHandshake({ packet, extensions }) {
   }
   return {
     query,
-    response
+    response,
+    isLight
   }
 }
 
