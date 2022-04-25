@@ -1,5 +1,3 @@
-function hookLoop(nanoNode) {
+function hookLoop(nanoNode) {}
 
-}
-
-module.exports = hookLoop;
+module.exports = hookLoop

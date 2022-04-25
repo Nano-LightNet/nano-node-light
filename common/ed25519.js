@@ -978,9 +978,10 @@ export function verify(sig, message, publicKey) {
   // We don't check its equations for performance. We do check for valid bounds for s though
   // We always check for: a) s bounds. b) hex validity
   try {
-    if (!(publicKey instanceof Point)) publicKey = Point.fromHex(publicKey, false)
+    if (!(publicKey instanceof Point))
+      publicKey = Point.fromHex(publicKey, false)
     const { r, s } =
-    sig instanceof Signature ? sig.assertValidity() : Signature.fromHex(sig)
+      sig instanceof Signature ? sig.assertValidity() : Signature.fromHex(sig)
     const SB = ExtendedPoint.BASE.multiplyUnsafe(s)
     const k = hashModqLE(r.toRawBytes(), publicKey.toRawBytes(), message)
     const kA = ExtendedPoint.fromAffine(publicKey).multiplyUnsafe(k)
@@ -988,7 +989,7 @@ export function verify(sig, message, publicKey) {
     // [8][S]B = [8]R + [8][k]A'
     return RkA.subtract(SB).multiplyUnsafe(CURVE.h).equals(ExtendedPoint.ZERO)
   } catch {
-    return false;
+    return false
   }
 }
 

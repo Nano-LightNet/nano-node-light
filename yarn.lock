@@ -1951,6 +1951,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nano-node-light@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "nano-node-light@workspace:."
+  dependencies:
+    "@babel/core": ^7.17.9
+    "@babel/eslint-parser": ^7.17.0
+    blake2: ^4.1.1
+    debug: ^4.3.4
+    eslint: ^8.12.0
+    eslint-config-standard: ^16.0.3
+    eslint-plugin-import: ^2.26.0
+    eslint-plugin-node: ^11.1.0
+    eslint-plugin-promise: ^6.0.0
+    ip6addr: ^0.2.5
+    prettier: ^2.6.2
+    yargs: ^17.4.0
+  languageName: unknown
+  linkType: soft
+
 "natural-compare@npm:^1.4.0":
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
@@ -2268,25 +2287,6 @@ __metadata:
   checksum: 87f4164e396f0171b0a3386cc1877a817f572148ee13a7e113b238e48e8a9f2f31d009a92ec38a591ff1567d9662c6b67fd8818a2dbbaed74bc26a87a2a4a9a0
   languageName: node
   linkType: hard
-
-"root-workspace-0b6124@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "root-workspace-0b6124@workspace:."
-  dependencies:
-    "@babel/core": ^7.17.9
-    "@babel/eslint-parser": ^7.17.0
-    blake2: ^4.1.1
-    debug: ^4.3.4
-    eslint: ^8.12.0
-    eslint-config-standard: ^16.0.3
-    eslint-plugin-import: ^2.26.0
-    eslint-plugin-node: ^11.1.0
-    eslint-plugin-promise: ^6.0.0
-    ip6addr: ^0.2.5
-    prettier: ^2.6.2
-    yargs: ^17.4.0
-  languageName: unknown
-  linkType: soft
 
 "safe-buffer@npm:~5.1.1":
   version: 5.1.2
