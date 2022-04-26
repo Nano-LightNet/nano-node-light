@@ -10,16 +10,6 @@ const argv = yargs(hideBin(process.argv)).argv
 const log = debug('bin')
 debug.enable('*')
 
-if (!argv.address) {
-  log('missing --address')
-  process.exit()
-}
-
-if (!argv.port) {
-  log('missing --port')
-  process.exit()
-}
-
 const getNetwork = (network = 'beta') => {
   switch (network) {
     case 'live':
@@ -34,12 +24,13 @@ const getNetwork = (network = 'beta') => {
 }
 
 const network = getNetwork(argv.network)
-const node = new NanoNode({
+const config = {
   address: argv.address,
   port: argv.port,
   network,
-  requestTelemetry: true
-})
+  requestTelemetry: argv.telemetry
+}
+const node = new NanoNode(config)
 
 node.on('error', (error) => {
   console.log(error)
