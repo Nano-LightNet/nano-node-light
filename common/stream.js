@@ -85,6 +85,9 @@ function getSize(header) {
 
       return telemetryLength
     }
+    case constants.MESSAGE_TYPE.PROTOCOL_UPGRADE: {
+      return 0
+    }
   }
 }
 
