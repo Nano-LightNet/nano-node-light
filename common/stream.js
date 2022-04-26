@@ -18,6 +18,16 @@ function getDefault() {
   }
 }
 
+function setDefaultState(state) {
+  state.headerLength = 0
+  state.message_type = null
+  state.version = null
+  state.extensions = null
+  state.bodySize = 0
+  state.expectedBodySize = null
+  state.body = null
+}
+
 const blockSizes = {
   0x00: 0, // Invalid
   0x01: 0, // Not A Block (NaB)
@@ -64,6 +74,9 @@ function getSize(header) {
 
       return queryLength + responseLength
     }
+    case constants.MESSAGE_TYPE.BULK_PULL_ACCOUNT: {
+      return 49
+    }
     case constants.MESSAGE_TYPE.TELEMETRY_REQ: {
       return 0
     }
@@ -80,7 +93,6 @@ function streamPacketBody(packet) {
 
   const bodyPtr = state.expectedBodySize - state.bodySize
   const body = packet.subarray(0, bodyPtr)
-  // add segment to end of current state body buffer
   state.body.set(body, state.bodySize)
   state.bodySize += body.length
 
@@ -91,7 +103,7 @@ function streamPacketBody(packet) {
     delete msgInfo.headerLength
     this.emit('message', msgInfo)
 
-    this.state = getDefault()
+    setDefaultState(this.state)
 
     const leftover = packet.subarray(bodyPtr)
     if (leftover.length > 0) {
@@ -111,7 +123,7 @@ function streamPacket(packet) {
     state.header.set(header, state.headerLength)
     state.headerLength += header.length
 
-    if (state.headerLength >= 8) {
+    if (state.headerLength == 8) {
       if (state.header[0] !== constants.MAGIC_NUMBER) return true
       if (state.header[1] !== this.network) return true
       if (state.header[2] < 0x12) return true
@@ -125,11 +137,7 @@ function streamPacket(packet) {
       state.body = Buffer.alloc(bodySize)
       state.expectedBodySize = bodySize
 
-      delete state.header
-    }
-
-    const leftover = packet.subarray(headerPtr)
-    if (leftover.length > 0 || state.expectedBodySize == 0) {
+      const leftover = packet.subarray(headerPtr)
       this.streamPacketBody(leftover)
     }
   }
