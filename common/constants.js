@@ -14,7 +14,8 @@ export const MESSAGE_TYPE = {
   NODE_ID_HANDSHAKE: 0x0a,
   BULK_PULL_ACCOUNT: 0x0b,
   TELEMETRY_REQ: 0x0c,
-  TELEMETRY_ACK: 0x0d
+  TELEMETRY_ACK: 0x0d,
+  PROTOCOL_UPGRADE: 0x1f
 }
 export const MESSAGE_TYPE_NAME = {
   [MESSAGE_TYPE.INVALID]: 'Invalid',
@@ -28,7 +29,8 @@ export const MESSAGE_TYPE_NAME = {
   [MESSAGE_TYPE.NODE_ID_HANDSHAKE]: 'NodeIDHandshake',
   [MESSAGE_TYPE.BULK_PULL_ACCOUNT]: 'BulkPullAccount',
   [MESSAGE_TYPE.TELEMETRY_REQ]: 'TelemetryReq',
-  [MESSAGE_TYPE.TELEMETRY_ACK]: 'TelemetryAck'
+  [MESSAGE_TYPE.TELEMETRY_ACK]: 'TelemetryAck',
+  [MESSAGE_TYPE.PROTOCOL_UPGRADE]: 'ProtocolUpgrade'
 }
 
 export const NETWORK = {
