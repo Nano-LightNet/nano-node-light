@@ -38,7 +38,7 @@ const blockSizes = {
   0x06: 216 // State
 }
 
-function getSize(header) {
+function getSize_Origin(header) {
   switch (header.message_type) {
     case constants.MESSAGE_TYPE.KEEPALIVE: {
       return 144
@@ -89,6 +89,20 @@ function getSize(header) {
       return 0
     }
   }
+  
+  return null
+}
+
+function getSize_Light(header) {
+  return null
+}
+
+function getSize(header, type) {
+  if (type == 1) {
+    return getSize_Light(header)
+  } else {
+    return getSize_Origin(header)
+  }
 }
 
 function streamPacketBody(packet) {
@@ -116,6 +130,8 @@ function streamPacketBody(packet) {
 }
 
 function streamPacket(packet) {
+  if (!this.active) return;
+  
   const state = this.state
 
   if (state.headerLength == 8) {
@@ -135,8 +151,9 @@ function streamPacket(packet) {
       state.version = state.header[3]
       state.message_type = state.header[5]
       state.extensions = (state.header[7] << 8) + state.header[6]
-      const bodySize = getSize(state)
-
+      const bodySize = getSize(state, this.streamMode)
+      
+      if (bodySize == null) return true;
       state.body = Buffer.alloc(bodySize)
       state.expectedBodySize = bodySize
 
@@ -157,12 +174,17 @@ class NanoStream {
     this.state = getDefault()
     this.isBusy = false
     this.queue = []
+    
+    this.streamMode = 0;
+    
+    this.active = true;
   }
 
   process(packet) {
     const result = this.streamPacket(packet)
 
     if (result) {
+      this.destroy()
       this.emit('error')
     } else {
       const next = this.queue.shift()
@@ -173,7 +195,14 @@ class NanoStream {
       }
     }
   }
-
+  
+  destroy() {
+    this.active = false;
+    this.queue = [];
+    this.isBusy = true;
+    delete this.state;
+  }
+  
   push(packet) {
     if (this.isBusy) {
       this.queue.push(packet)
