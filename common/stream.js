@@ -98,7 +98,7 @@ function getSize_Light(header) {
 }
 
 function getSize(header, mode) {
-  if (type == 1) {
+  if (mode == 1) {
     return getSize_Light(header)
   } else {
     return getSize_Origin(header)
