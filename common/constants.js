@@ -33,6 +33,17 @@ export const MESSAGE_TYPE_NAME = {
   [MESSAGE_TYPE.PROTOCOL_UPGRADE]: 'ProtocolUpgrade'
 }
 
+export const LNET_MESSAGE_TYPE = {
+  INVALID: 0x00,
+  NODE_ID_HANDSHAKE: 0x01,
+  NODE_ID_ACK: 0x02
+}
+export const LNET_MESSAGE_TYPE_NAME = {
+  [LNET_MESSAGE_TYPE.INVALID]: 'Invalid',
+  [LNET_MESSAGE_TYPE.NODE_ID_HANDSHAKE]: 'NodeIDHandshake',
+  [LNET_MESSAGE_TYPE.NODE_ID_ACK]: 'NodeIDAck',
+}
+
 export const NETWORK = {
   LIVE: {
     ID: 'C'.charCodeAt(0),
