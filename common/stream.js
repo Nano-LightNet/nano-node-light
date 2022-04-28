@@ -214,7 +214,7 @@ class NanoStream {
 
   emit(evName, ...args) {
     if (typeof this._ev[evName] === 'undefined') return
-    this._ev[evName].forEach(async function(listener) {
+    this._ev[evName].forEach(async function (listener) {
       listener(...args)
     })
   }
