@@ -196,6 +196,8 @@ class NanoStream {
     this.queue = []
 
     this.streamMode = 0
+    this.height = 0n
+    this.peerHeight = 0n
 
     this.active = true
   }
