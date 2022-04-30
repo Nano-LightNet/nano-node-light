@@ -124,7 +124,7 @@ function streamPacketBody(packet) {
 
     const leftover = packet.subarray(bodyPtr)
     if (leftover.length > 0) {
-      this.streamPacket(leftover)
+      return this.streamPacket(leftover)
     }
   }
 }
@@ -135,7 +135,7 @@ function streamPacket(packet) {
   const state = this.state
 
   if (state.headerLength === 8) {
-    this.streamPacketBody(packet)
+    return this.streamPacketBody(packet)
   } else {
     const headerPtr = 8 - state.headerLength
     const header = packet.subarray(0, headerPtr)
@@ -158,7 +158,7 @@ function streamPacket(packet) {
       state.expectedBodySize = bodySize
 
       const leftover = packet.subarray(headerPtr)
-      this.streamPacketBody(leftover)
+      return this.streamPacketBody(leftover)
     }
   }
 }
