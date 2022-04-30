@@ -53,14 +53,14 @@ function getSize_Origin(header) {
     case constants.MESSAGE_TYPE.CONFIRM_REQ: {
       const blockType = (header.extensions & 0x0f00) >> 8
       const blockCount = (header.extensions & 0xf000) >> 12
-      
+
       if (blockType !== 0 && blockType !== 1) {
         const blockSize = blockSizes[blockType]
         if (blockSize) return blockSize
       } else if (blockType === 1) {
         return blockCount * 64
       }
-      
+
       return 0
     }
     case constants.MESSAGE_TYPE.CONFIRM_ACK: {
@@ -68,7 +68,7 @@ function getSize_Origin(header) {
       const blockCount = (header.extensions & 0xf000) >> 12
 
       let size = 0
-      
+
       if (blockType !== 0 && blockType !== 1) {
         const blockSize = blockSizes[blockType]
         if (blockSize) {
@@ -77,7 +77,7 @@ function getSize_Origin(header) {
       } else if (blockType === 1) {
         size = blockCount * 32
       }
-      
+
       return 104 + size
     }
     case constants.MESSAGE_TYPE.BULK_PULL: {
