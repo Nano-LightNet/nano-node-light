@@ -114,6 +114,22 @@ function getSize_Origin(header) {
 }
 
 function getSize_Light(header) {
+  switch (header.message_type) {
+    case constants.LNET_MESSAGE_TYPE.NODE_ID_REQ: {
+      const cookieLength = header.extensions & 0x1 && 30
+      return 32 + cookieLength
+    }
+    case constants.LNET_MESSAGE_TYPE.NODE_ID_ACK: {
+      const repCount = (header.extensions & 0x1f)
+
+      return (96 * repCount) + 32
+    }
+    case constants.LNET_MESSAGE_TYPE.HEIGHT_REQ:
+    case constants.LNET_MESSAGE_TYPE.HEIGHT_ACK: {
+      return 32
+    }
+  }
+
   return null
 }
 
