@@ -193,6 +193,10 @@ function streamPacket(packet) {
       state.body = Buffer.alloc(bodySize)
       state.expectedBodySize = bodySize
 
+      if (state.message_type === constants.MESSAGE_TYPE.PROTOCOL_UPGRADE && this.streamMode === 0) {
+        this.streamMode = 1
+      }
+
       const leftover = packet.subarray(headerPtr)
       return this.streamPacketBody(leftover)
     }
