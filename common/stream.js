@@ -154,6 +154,10 @@ function streamPacketBody(packet) {
     delete msgInfo.bodySize
     delete msgInfo.expectedBodySize
     delete msgInfo.headerLength
+    if (this.streamMode === 1 && msgInfo.message_type !== constants.LNET_MESSAGE_TYPE.NODE_ID_REQ) {
+      msgInfo.height = this.height
+      this.height++
+    }
     this.emit('message', msgInfo)
 
     setDefaultState(this.state)
@@ -217,7 +221,6 @@ class NanoStream {
 
     this.streamMode = 0
     this.height = 0n
-    this.peerHeight = 0n
 
     this.active = true
   }
