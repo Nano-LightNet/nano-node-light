@@ -12,8 +12,8 @@ let PrivateKey = Buffer.alloc(32, 0)
 
 const PrivateKeyRegex = /^[0-9a-fA-F]{64}$/
 
-if (typeof argv.PrivateKey === "string" && PrivateKeyRegex.test(argv.PrivateKey)) {
-  PrivateKey = Buffer.from(argv.PrivateKey, "hex")
+if (typeof argv.PrivateKey === 'string' && PrivateKeyRegex.test(argv.PrivateKey)) {
+  PrivateKey = Buffer.from(argv.PrivateKey, 'hex')
 }
 
 const PublicKey = Buffer.from(ed25519.getPublicKey(PrivateKey))
