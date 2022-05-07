@@ -17,6 +17,24 @@ export function hash32(input) {
   return hash
 }
 
+const ELECTION_EXPIRE = 5 * 60 * 1000
+const ELECTION_ACTIVE = 5 * 1000
+
+export function getState(election) {
+  const dateDiff = Date.now() - election.started
+  if (election.state == 1) {
+    return "CONFIRMED"
+  } else if (dateDiff >= ELECTION_EXPIRE) {
+    return "EXPIRED"
+  } else if (election.requestCount >= 2) {
+    return "BROADCASTING"
+  } else if (dateDiff >= ELECTION_ACTIVE) {
+    return "ACTIVE"
+  } else {
+    return "PASSIVE"
+  }
+}
+
 export function encodeMessage({
   message,
   messageType,
