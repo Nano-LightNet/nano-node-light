@@ -22,11 +22,9 @@ const testConfirmAck = encodeVote({
     publicKey: PublicKey,
     privateKey: PrivateKey,
     hashList: [
-        Buffer.from("9C695F34AC5F5A521A0E26EAA1A167961E3F30C8D8E0979733BB2C2D1949F5C8","hex")
+        Buffer.from('9C695F34AC5F5A521A0E26EAA1A167961E3F30C8D8E0979733BB2C2D1949F5C8', 'hex')
     ]
-});
-
-console.log(testConfirmAck)
+})
 
 const log = debug('bin')
 debug.enable('*')
@@ -76,7 +74,7 @@ node.on('telemetry', (telemetry) => {
 
 let firstConnect = false
 
-node.on('handshake', ({nodeId}) => {
+node.on('handshake', ({ nodeId }) => {
   if (firstConnect) return
   firstConnect = true
 
