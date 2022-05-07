@@ -31,7 +31,7 @@ export const STATE_NAMES = {
 export function getState(election) {
   const dateDiff = Date.now() - election.started
   if (election.state === 1) {
-    return 4'
+    return 4
   } else if (dateDiff >= ELECTION_EXPIRE) {
     return 3
   } else if (election.requestCount >= 2) {
