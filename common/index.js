@@ -132,6 +132,46 @@ export function decodeNodeHandshake({ packet, extensions }) {
 
 const votePrefix = Buffer.from('vote ')
 
+const FinalTimestamp = Buffer.alloc(32, 255)
+
+export function encodeVote({
+  publicKey,
+  privateKey,
+  finalVote = false,
+  hashList
+}) {
+  if (hashList.length > 15) throw new Error("Voting Error: can't vote on more than 15 hashes.") 
+  const Timestamp = Buffer.alloc(8)
+  if (finalVote) {
+    Timestamp.set(FinalTimestamp)
+  } else {
+    Timestamp.writeBigUInt64LE(BigInt(Date.now()))
+  }
+
+  const HashList = Buffer.alloc(32 * hashList.length)
+
+  for (const index in hashList) {
+    const hash = hashList[index]
+    HashList.set(hash, index * 32)
+  }
+
+  const VoteHash = hash32(Buffer.concat([votePrefix, HashList, Timestamp]))
+  const Signature = ed25519.sign(VoteHash, privateKey, publicKey)
+
+  const VoteCommon = Buffer.alloc(104)
+  VoteCommon.set(publicKey)
+  VoteCommon.set(Signature, 32)
+  VoteCommon.set(Timestamp, 96)
+
+  return {
+    extensions: (hashList.length << 12) | 0x100,
+    body: Buffer.concat([
+      VoteCommon,
+      HashList
+    ])
+  }
+}
+
 export function decodeVote({ body, extensions }) {
   const voteCount = (extensions & 0xf000) >> 12
 

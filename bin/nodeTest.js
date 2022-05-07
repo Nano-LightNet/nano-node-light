@@ -9,7 +9,6 @@ import * as ed25519 from '#common/ed25519.js'
 const argv = yargs(hideBin(process.argv)).argv
 
 let PrivateKey = Buffer.alloc(32, 0)
-let PublicKey;
 
 const PrivateKeyRegex = /^[0-9a-fA-F]{64}$/
 
@@ -17,7 +16,7 @@ if (typeof argv.PrivateKey === "string" && PrivateKeyRegex.test(argv.PrivateKey)
   PrivateKey = Buffer.from(argv.PrivateKey, "hex")
 }
 
-PublicKey = Buffer.from(ed25519.getPublicKey(PrivateKey))
+const PublicKey = Buffer.from(ed25519.getPublicKey(PrivateKey))
 
 const log = debug('bin')
 debug.enable('*')
