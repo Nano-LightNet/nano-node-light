@@ -94,7 +94,7 @@ export function rawToXNO(raw, decimals = 4) {
   const integer = str.slice(0, -30)
   const decimal = '.' + str.slice(-30).substring(0, decimals)
 
-  return commafy(integer + ((decimals && decimal) || ""))
+  return commafy(integer + ((decimals && decimal) || ''))
 }
 
 export function encodeAddress({ publicKey, prefix = 'nano_' }) {
