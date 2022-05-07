@@ -140,7 +140,7 @@ export function encodeVote({
   finalVote = false,
   hashList
 }) {
-  if (hashList.length > 15) throw new Error("Voting Error: can't vote on more than 15 hashes.") 
+  if (hashList.length > 15) throw new Error("Voting Error: can't vote on more than 15 hashes.")
   const Timestamp = Buffer.alloc(8)
   if (finalVote) {
     Timestamp.set(FinalTimestamp)
