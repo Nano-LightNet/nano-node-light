@@ -78,6 +78,25 @@ export function encodeConnectionInfo({ address, port }) {
   return raw
 }
 
+function commafy( num ) {
+  var str = num.toString().split('.');
+  if (str[0].length >= 5) {
+      str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+  }
+  if (str[1] && str[1].length >= 5) {
+      str[1] = str[1].replace(/(\d{3})/g, '$1 ');
+  }
+  return str.join('.');
+}
+
+export function rawToXNO(raw, decimals = 4) {
+	const str = raw.toString().padStart(31, "0");
+	const integer = str.slice(0, -30);
+	const decimal = "." + str.slice(-30).substring(0, decimals);
+
+	return commafy(integer + (decimals && decimal || ""))
+}
+
 export function encodeAddress({ publicKey, prefix = 'nano_' }) {
   const encodedPublicKey = encodeNanoBase32(publicKey)
   const blake2b = blake2.createHash('blake2b', { digestLength: 5 })
