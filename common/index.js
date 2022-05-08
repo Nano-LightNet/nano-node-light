@@ -17,6 +17,32 @@ export function hash32(input) {
   return hash
 }
 
+const ELECTION_EXPIRE = 5 * 60 * 1000
+const ELECTION_ACTIVE = 5 * 1000
+
+export const STATE_NAMES = {
+  0: 'PASSIVE',
+  1: 'ACTIVE',
+  2: 'BROADCASTING',
+  3: 'EXPIRED',
+  4: 'CONFIRMED'
+}
+
+export function getState(election) {
+  const dateDiff = Date.now() - election.started
+  if (election.confirmed !== 0) {
+    return 4
+  } else if (dateDiff >= ELECTION_EXPIRE) {
+    return 3
+  } else if (election.requestCount >= 2) {
+    return 2
+  } else if (dateDiff >= ELECTION_ACTIVE) {
+    return 1
+  } else {
+    return 0
+  }
+}
+
 export function encodeMessage({
   message,
   messageType,
@@ -34,6 +60,25 @@ export function encodeMessage({
   packet.writeUInt16LE(extensions, 6)
   packet.set(message, 8)
   return packet
+}
+
+function commafy(num) {
+  const str = num.toString().split('.')
+  if (str[0].length >= 5) {
+      str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+  }
+  if (str[1] && str[1].length >= 5) {
+      str[1] = str[1].replace(/(\d{3})/g, '$1 ')
+  }
+  return str.join('.')
+}
+
+export function rawToXNO(raw, decimals = 4) {
+  const str = raw.toString().padStart(31, '0')
+  const integer = str.slice(0, -30)
+  const decimal = '.' + str.slice(-30).substring(0, decimals)
+
+  return commafy(integer + ((decimals && decimal) || ''))
 }
 
 export function decodeConnectionInfo(raw) {
@@ -105,6 +150,46 @@ export function decodeNodeHandshake({ packet, extensions }) {
 }
 
 const votePrefix = Buffer.from('vote ')
+
+const FinalTimestamp = Buffer.alloc(32, 255)
+
+export function encodeVote({
+  publicKey,
+  privateKey,
+  finalVote = false,
+  hashList
+}) {
+  if (hashList.length > 15) throw new Error("Voting Error: can't vote on more than 15 hashes.")
+  const Timestamp = Buffer.alloc(8)
+  if (finalVote) {
+    Timestamp.set(FinalTimestamp)
+  } else {
+    Timestamp.writeBigUInt64LE(BigInt(Date.now()))
+  }
+
+  const HashList = Buffer.alloc(32 * hashList.length)
+
+  for (const index in hashList) {
+    const hash = hashList[index]
+    HashList.set(hash, index * 32)
+  }
+
+  const VoteHash = hash32(Buffer.concat([votePrefix, HashList, Timestamp]))
+  const Signature = ed25519.sign(VoteHash, privateKey, publicKey)
+
+  const VoteCommon = Buffer.alloc(104)
+  VoteCommon.set(publicKey)
+  VoteCommon.set(Signature, 32)
+  VoteCommon.set(Timestamp, 96)
+
+  return {
+    extensions: (hashList.length << 12) | 0x100,
+    body: Buffer.concat([
+      VoteCommon,
+      HashList
+    ])
+  }
+}
 
 export function decodeVote({ body, extensions }) {
   const voteCount = (extensions & 0xf000) >> 12

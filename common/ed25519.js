@@ -914,7 +914,7 @@ function decodeScalar25519(n) {
 
 // Private convenience method
 // RFC8032 5.1.5
-function getExtendedPublicKey(key) {
+function getExtendedKey(key) {
   // Normalize bigint / number / string to Uint8Array
   key =
     typeof key === 'bigint' || typeof key === 'number'
@@ -930,6 +930,10 @@ function getExtendedPublicKey(key) {
   const prefix = hashed.slice(32, 64)
   // The actual private scalar
   const scalar = mod(bytesToNumberLE(head), CURVE.l)
+  return { head, prefix, scalar }
+}
+function getExtendedPublicKey(key) {
+  const { head, prefix, scalar } = getExtendedKey(key)
   // Point on Edwards curve aka public key
   const point = Point.BASE.multiply(scalar)
   const pointBytes = point.toRawBytes()
@@ -951,12 +955,12 @@ export function getPublicKey(privateKey) {
  * Signs message with privateKey.
  * RFC8032 5.1.6
  */
-export function sign(message, privateKey) {
+export function sign(message, privateKey, publicKey) {
   message = ensureBytes(message)
-  const { prefix, scalar, pointBytes } = getExtendedPublicKey(privateKey)
+  const { prefix, scalar } = getExtendedKey(privateKey)
   const r = hashModqLE(prefix, message) // r = hash(prefix + msg)
   const R = Point.BASE.multiply(r) // R = rG
-  const k = hashModqLE(R.toRawBytes(), pointBytes, message) // k = hash(R + P + msg)
+  const k = hashModqLE(R.toRawBytes(), publicKey, message) // k = hash(R + P + msg)
   const s = mod(r + k * scalar, CURVE.l) // s = r + kp
   return new Signature(R, s).toRawBytes()
 }
