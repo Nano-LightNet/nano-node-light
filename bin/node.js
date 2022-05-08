@@ -1,4 +1,5 @@
 import debug from 'debug'
+import express from 'express'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 
@@ -44,15 +45,12 @@ node.connectDomain({
   port: network.PORT
 })
 
-import express from 'express'
-
 const app = express()
 
-app.get("/", (req,res) => {
-
+app.get('/', (req, res) => {
   let peerCount = 0n
 
-  for (let peer of node.peers.values()){
+  for (const peer of node.peers.values()) {
     if (peer && peer.nanoSocket.connectedNodeId) peerCount++
   }
   res.json({
