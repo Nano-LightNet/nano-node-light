@@ -43,3 +43,21 @@ node.connectDomain({
   address: network.ADDRESS,
   port: network.PORT
 })
+
+import express from 'express'
+
+const app = express()
+
+app.get("/", (req,res) => {
+
+  let peerCount = 0n
+
+  for (let peer of node.peers.values()){
+    if (peer && peer.nanoSocket.connectedNodeId) peerCount++
+  }
+  res.json({
+      peerCount: peerCount.toString()
+  })
+})
+
+app.listen(80)
