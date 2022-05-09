@@ -18,6 +18,7 @@
     "blake2": "^4.1.1",
     "debug": "^4.3.4",
     "ip6addr": "^0.2.5",
+    "nano-rpc": "mistakia/nano-rpc#bd4f95691a0ae6cc0ab803b56356b4eb620ad46b",
     "yargs": "^17.4.0"
   },
   "devDependencies": {
