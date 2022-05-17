@@ -43,3 +43,7 @@ node.connectDomain({
   address: network.ADDRESS,
   port: network.PORT
 })
+
+setInterval(() => {
+  console.log(`Connected peers: ${node.peers.size}`)
+}, 5000)
