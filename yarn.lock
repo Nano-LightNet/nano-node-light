@@ -2269,7 +2269,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nan@npm:^2.15.0":
+"nan@npm:^2.14.1, nan@npm:^2.15.0":
   version: 2.15.0
   resolution: "nan@npm:2.15.0"
   dependencies:
@@ -2295,6 +2295,7 @@ __metadata:
     eslint-plugin-promise: ^6.0.0
     ip6addr: ^0.2.5
     mocha: ^9.2.2
+    node-lmdb: ^0.9.7
     prettier: ^2.6.2
     yargs: ^17.4.0
   languageName: unknown
@@ -2323,6 +2324,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-gyp-build@npm:^4.2.3":
+  version: 4.4.0
+  resolution: "node-gyp-build@npm:4.4.0"
+  bin:
+    node-gyp-build: bin.js
+    node-gyp-build-optional: optional.js
+    node-gyp-build-test: build-test.js
+  checksum: 972a059f960253d254e0b23ce10f54c8982236fc0edcab85166d0b7f87443b2ce98391c877cfb2f6eeafcf03c538c5f4dd3e0bfff03828eb48634f58f4c64343
+  languageName: node
+  linkType: hard
+
 "node-gyp@npm:latest":
   version: 9.0.0
   resolution: "node-gyp@npm:9.0.0"
@@ -2340,6 +2352,17 @@ __metadata:
   bin:
     node-gyp: bin/node-gyp.js
   checksum: 4d8ef8860f7e4f4d86c91db3f519d26ed5cc23b48fe54543e2afd86162b4acbd14f21de42a5db344525efb69a991e021b96a68c70c6e2d5f4a5cb770793da6d3
+  languageName: node
+  linkType: hard
+
+"node-lmdb@npm:^0.9.7":
+  version: 0.9.7
+  resolution: "node-lmdb@npm:0.9.7"
+  dependencies:
+    nan: ^2.14.1
+    node-gyp: latest
+    node-gyp-build: ^4.2.3
+  checksum: e88ac7113596cd386f65f2a1bbd21e04be225efd288408722756ce26c5e03a82995f14c4c2fa10f80980168b1968692891825dfe78c154f87c5599a473e07a74
   languageName: node
   linkType: hard
 
