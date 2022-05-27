@@ -27,8 +27,8 @@ export function encodeMessage({
   const packet = Buffer.alloc(8 + messageLength)
   packet[0] = constants.MAGIC_NUMBER
   packet[1] = network
-  packet[2] = 0x12
-  packet[3] = 0x12
+  packet[2] = 0x13
+  packet[3] = 0x13
   packet[4] = 0x12
   packet[5] = messageType
   packet.writeUInt16LE(extensions, 6)
