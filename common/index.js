@@ -17,6 +17,45 @@ export function hash32(input) {
   return hash
 }
 
+function decodeSendBlock (data) {
+
+}
+
+function decodeReceiveBlock (data) {
+
+}
+
+function decodeOpenBlock (data) {
+
+}
+
+function decodeChangeBlock (data) {
+
+}
+
+function decodeStateBlock (data) {
+  const result = {}
+}
+
+export function decodeBlock({
+  block,
+  blockType
+}) {
+  console.log({ block, blockType })
+  switch (blockType) {
+    case 2: // send
+      return decodeSendBlock(block)
+    case 3: // receive
+      return decodeReceiveBlock(block)
+    case 4: // open
+      return decodeOpenBlock(block)
+    case 5: // change
+      return decodeChangeBlock(block)
+    case 6: // state
+      return decodeStateBlock(block)
+  }
+}
+
 export function encodeMessage({
   message,
   messageType,
