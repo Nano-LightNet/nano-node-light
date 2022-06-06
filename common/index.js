@@ -111,7 +111,9 @@ export function decodeVote({ body, extensions }) {
     hashList.push(hashItems.subarray(hashPtr, hashPtr + 32))
   }
 
-  const voteHash = ed25519.hash(Buffer.concat([votePrefix, hashItems, timestamp]))
+  const voteHash = ed25519.hash(
+    Buffer.concat([votePrefix, hashItems, timestamp])
+  )
   const isValid = ed25519.verify(signature, voteHash, account)
 
   return {
