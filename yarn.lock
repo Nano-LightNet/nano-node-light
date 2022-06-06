@@ -340,6 +340,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@trashman/ed25519-blake2b@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "@trashman/ed25519-blake2b@npm:0.0.2"
+  dependencies:
+    napi-macros: ^2.0.0
+    node-gyp: latest
+    node-gyp-build: ^4.4.0
+  checksum: 5b5a75fe6fbd38eab03725f47f8b283f3207ecf7c53e6e744bbb444cad4b6248c10e27bf14c4b648af4c9354efe42ff700e55acb7eaf37b3ddda5d5b2b62ba73
+  languageName: node
+  linkType: hard
+
 "@types/json5@npm:^0.0.29":
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
@@ -537,16 +548,6 @@ __metadata:
   version: 2.2.0
   resolution: "binary-extensions@npm:2.2.0"
   checksum: ccd267956c58d2315f5d3ea6757cf09863c5fc703e50fbeb13a7dc849b812ef76e3cf9ca8f35a0c48498776a7478d7b4a0418e1e2b8cb9cb9731f2922aaad7f8
-  languageName: node
-  linkType: hard
-
-"blake2@npm:^4.1.1":
-  version: 4.1.1
-  resolution: "blake2@npm:4.1.1"
-  dependencies:
-    nan: ^2.15.0
-    node-gyp: latest
-  checksum: 7ddd70d81b8db24326636dce2f8be4f7142230b500619dd3ee90c457386bf45d08ec7e7b9f12be8c694d74d67a766fb59ddff1b8edfea917ac67141b9aa37ed6
   languageName: node
   linkType: hard
 
@@ -2269,22 +2270,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nan@npm:^2.15.0":
-  version: 2.15.0
-  resolution: "nan@npm:2.15.0"
-  dependencies:
-    node-gyp: latest
-  checksum: 33e1bb4dfca447fe37d4bb5889be55de154828632c8d38646db67293a21afd61ed9909cdf1b886214a64707d935926c4e60e2b09de9edfc2ad58de31d6ce8f39
-  languageName: node
-  linkType: hard
-
 "nano-node-light@workspace:.":
   version: 0.0.0-use.local
   resolution: "nano-node-light@workspace:."
   dependencies:
     "@babel/core": ^7.17.9
     "@babel/eslint-parser": ^7.17.0
-    blake2: ^4.1.1
+    "@trashman/ed25519-blake2b": ^0.0.2
     chai: ^4.3.6
     chai-bytes: ^0.1.2
     debug: ^4.3.4
@@ -2309,6 +2301,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"napi-macros@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "napi-macros@npm:2.0.0"
+  checksum: 30384819386977c1f82034757014163fa60ab3c5a538094f778d38788bebb52534966279956f796a92ea771c7f8ae072b975df65de910d051ffbdc927f62320c
+  languageName: node
+  linkType: hard
+
 "natural-compare@npm:^1.4.0":
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
@@ -2320,6 +2319,17 @@ __metadata:
   version: 0.6.3
   resolution: "negotiator@npm:0.6.3"
   checksum: b8ffeb1e262eff7968fc90a2b6767b04cfd9842582a9d0ece0af7049537266e7b2506dfb1d107a32f06dd849ab2aea834d5830f7f4d0e5cb7d36e1ae55d021d9
+  languageName: node
+  linkType: hard
+
+"node-gyp-build@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "node-gyp-build@npm:4.4.0"
+  bin:
+    node-gyp-build: bin.js
+    node-gyp-build-optional: optional.js
+    node-gyp-build-test: build-test.js
+  checksum: 972a059f960253d254e0b23ce10f54c8982236fc0edcab85166d0b7f87443b2ce98391c877cfb2f6eeafcf03c538c5f4dd3e0bfff03828eb48634f58f4c64343
   languageName: node
   linkType: hard
 

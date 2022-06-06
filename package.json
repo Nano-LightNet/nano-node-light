@@ -15,7 +15,7 @@
     "test": "NODE_ENV=test TEST=all mocha --exit"
   },
   "dependencies": {
-    "blake2": "^4.1.1",
+    "@trashman/ed25519-blake2b": "^0.0.2",
     "debug": "^4.3.4",
     "ip6addr": "^0.2.5",
     "yargs": "^17.4.0"

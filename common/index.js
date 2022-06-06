@@ -1,21 +1,10 @@
-import blake2 from 'blake2'
+import ed25519 from '@trashman/ed25519-blake2b'
 import ip6addr from 'ip6addr'
 
 import { encodeNanoBase32, decodeNanoBase32 } from './nano-base32.js'
 import * as constants from './constants.js'
-import * as ed25519 from './ed25519.js'
 
 export { constants, ed25519, encodeNanoBase32, decodeNanoBase32 }
-
-export function hash32(input) {
-  const hash = blake2
-    .createHash('blake2b', {
-      digestLength: 32
-    })
-    .update(input)
-    .digest()
-  return hash
-}
 
 export function encodeMessage({
   message,
@@ -54,9 +43,7 @@ export function encodeConnectionInfo({ address, port }) {
 
 export function encodeAddress({ publicKey, prefix = 'nano_' }) {
   const encodedPublicKey = encodeNanoBase32(publicKey)
-  const blake2b = blake2.createHash('blake2b', { digestLength: 5 })
-  blake2b.update(publicKey)
-  const checksum = blake2b.digest().reverse()
+  const checksum = ed25519.hash(publicKey, 5).reverse()
   const encodedChecksum = encodeNanoBase32(checksum)
   return prefix + encodedPublicKey + encodedChecksum
 }
@@ -124,7 +111,7 @@ export function decodeVote({ body, extensions }) {
     hashList.push(hashItems.subarray(hashPtr, hashPtr + 32))
   }
 
-  const voteHash = hash32(Buffer.concat([votePrefix, hashItems, timestamp]))
+  const voteHash = ed25519.hash(Buffer.concat([votePrefix, hashItems, timestamp]))
   const isValid = ed25519.verify(signature, voteHash, account)
 
   return {
