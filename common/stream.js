@@ -167,7 +167,7 @@ function streamPacket(packet) {
       if (state.header[0] !== constants.MAGIC_NUMBER) return true
       if (state.header[1] !== this.network) return true
       if (state.header[2] < 0x12) return true
-      if (state.header[3] !== 0x12) return true
+      if (state.header[3] > 0x13 || state.header[3] < 0x12) return true
       if (state.header[4] > 0x12) return true
       state.version = state.header[3]
       state.message_type = state.header[5]
