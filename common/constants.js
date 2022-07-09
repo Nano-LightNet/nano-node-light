@@ -38,18 +38,21 @@ export const NETWORK = {
     ID: 'C'.charCodeAt(0),
     ADDRESS: 'peering.nano.org',
     PORT: 7075,
+    KEEPALIVE_INTERVAL: 20000,
     TELEMETRY_CACHE_CUTOFF: 6e10 // 60 seconds
   },
   BETA: {
     ID: 'B'.charCodeAt(0),
     ADDRESS: 'peering-beta.nano.org',
     PORT: 54000,
+    KEEPALIVE_INTERVAL: 10000,
     TELEMETRY_CACHE_CUTOFF: 15e9 // 15 seconds
   },
   TEST: {
     ID: 'X'.charCodeAt(0),
     ADDRESS: 'peering-test.nano.org',
     PORT: 17075,
+    KEEPALIVE_INTERVAL: 10000,
     TELEMETRY_CACHE_CUTOFF: 6e10 // 60 seconds
   }
 }
